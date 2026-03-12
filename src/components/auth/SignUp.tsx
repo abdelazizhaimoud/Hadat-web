@@ -29,6 +29,8 @@ function SignUp() {
             const response = await axiosInstance.post('/signup', data)
             if (response.status == 201){
                 console.log('user signed up successfully !')
+                const token = response.data.token
+                localStorage.setItem('auth-token',token)
                 navigate('/home')
             }
         }catch (error){

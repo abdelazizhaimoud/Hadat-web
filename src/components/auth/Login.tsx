@@ -28,6 +28,8 @@ const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
         const response = await axiosInstance.post('/login',credentials);
 
         if(response.status == 200){
+            const token = response.data.token
+            localStorage.setItem('auth-token',token)
             console.log('logged in')
             navigate('/home')
         }
