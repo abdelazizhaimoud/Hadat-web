@@ -1,3 +1,4 @@
+import type { User } from "./User"
 export interface Activity {
   id: number,
   title: string,
@@ -7,6 +8,8 @@ export interface Activity {
   max_participants: number,
   host_id: number,
   joined: boolean,
+  participants?: User[],
+  host?: User,
   created_at: Date,
   updated_at: Date,
 }

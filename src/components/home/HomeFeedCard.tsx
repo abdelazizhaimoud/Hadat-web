@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import type { Activity } from '../../types/Activity';
 
 interface ActivityCardProps {
@@ -45,6 +46,7 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
           <button onClick={() => onLeave(activity.id)}>Leave</button>
         )}
       </div>
+      <div><Link to={`/activity/${activity.id}`}>details</Link></div>
       
       {children && (
         <div>

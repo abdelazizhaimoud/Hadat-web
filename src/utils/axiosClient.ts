@@ -1,6 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse, type AxiosError } from 'axios';
 
-const BASE_URL = "http://localhost:8000/api"
+const BASE_URL = "http://localhost:8080/api"
 const token = localStorage.getItem('auth-token')
 
 const axiosInstance: AxiosInstance = axios.create({

@@ -5,6 +5,7 @@ import Home from './components/home/Home'
 import './App.css'
 import SignUp from './components/auth/SignUp'
 import CreateActivity from './components/activity/CreateActivity'
+import ActivityDetails from './components/activity/ActivityDetails'
 import Dashboard from './components/dashboard/Dashboard'
 import Logout from './components/Logout'
 
@@ -18,6 +19,7 @@ function App() {
         <Route path='/signup' element={<SignUp />}></Route>
         <Route path='/home' element={<Home />}></Route>
         <Route path='/create-activity' element={<CreateActivity />}></Route>
+        <Route path='/activity/:id' element={<ActivityDetails />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
         <Route path='/logout' element={<Logout />}></Route>
       </Routes>
