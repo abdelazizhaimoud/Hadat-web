@@ -7,7 +7,7 @@ type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at
 function CreateActivity() {
   const [activity, setActivity] = useState<Activity>({
     title: "",
-    category: "",
+    category: "sport",
     location: "",
     date_time: new Date().toISOString().split('T')[0],
     max_participants: 0,
@@ -26,7 +26,7 @@ function CreateActivity() {
 
   }
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name,value} = e.target
     setActivity((prev) => ({...prev, [name]: value}))
   }
@@ -35,7 +35,13 @@ function CreateActivity() {
         <Header></Header>
         <form onSubmit={handleSubmit}>
           <span>title : </span><input type="text" name="title" value={activity.title} onChange={handleChange} /><br />
-          <span>category : </span><input type="text" name="category" value={activity.category} onChange={handleChange} /><br />
+          <span>category : </span>
+            <select name="category" onChange={handleChange}>
+              <option value="sport">Sport</option>
+              <option value="outdoor">Outdoor</option>
+              <option value="travel">Travel</option>
+            </select>
+          <br />
           <span>location : </span><input type="text" name="location" value={activity.location} onChange={handleChange} /><br />
           <span>date_time : </span><input type="date" name="date_time" min={new Date().toISOString().split('T')[0]} value={activity.date_time} onChange={handleChange} /><br />
           <span>max_participants : </span><input type="number" name="max_participants" value={activity.max_participants} onChange={handleChange} /><br />
