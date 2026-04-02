@@ -8,6 +8,7 @@ export interface Activity {
   max_participants: number,
   host_id: number,
   joined: boolean,
+  joined_count: number,
   participants?: User[],
   host?: User,
   created_at: Date,

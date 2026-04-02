@@ -6,11 +6,14 @@ import type { Activity } from "../../types/Activity"
 
 function HomeFeed() {
     const [activities, setActivities] = useState<Activity[]>([])
+    const [Category,setCategory] = useState<string>("")
     const [Search,setSearch] = useState<string>("")
 
     const fetchActivities = async () => {
         try{
-            const response = await axiosInstance.get('/activities')
+            const response = await axiosInstance.get('/activities', {
+                params: {search: Search, category: Category}
+            })
             if (response.status == 200){
                 console.log(response.data)
                 setActivities(response.data.activities)
@@ -61,16 +64,16 @@ function HomeFeed() {
         }
     }
 
-    const handleSearch = async () => {
-        const response = await axiosInstance.get("/activities/search",{
-            params: {search: Search}
-        })
-        setActivities(response.data.activities)
-    }
-
   return (
     <div>
-        search field : <input type="text" value={Search} onChange={(e) => setSearch(e.target.value)} /> <button onClick={handleSearch}>search</button>
+        search field : <input type="text" value={Search} onChange={(e) => setSearch(e.target.value)} />
+        filter category : <select onChange={(e) => setCategory(e.target.value)}>
+            <option value="">-- all categories --</option>
+            <option value="sport">Sport</option>
+            <option value="outdoor">Outdoor</option>
+            <option value="travel">Travel</option>
+        </select><br />
+         <button onClick={fetchActivities}>search</button>
       {activities.map(act => <HomeFeedCard onJoin={join} onLeave={leave} activity={{...act}} ></HomeFeedCard>)}
     </div>
   )

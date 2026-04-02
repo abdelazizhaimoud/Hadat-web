@@ -32,8 +32,8 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         {activity.category}
       </p>
       
-      <p className="participants">
-        Max: {activity.max_participants} participants
+      <p className="joined_count">
+        joined count: {activity.joined_count} / {activity.max_participants}
       </p>
       
       <div className="actions">
