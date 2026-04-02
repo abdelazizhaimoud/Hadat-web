@@ -6,6 +6,7 @@ import type { Activity } from "../../types/Activity"
 
 function HomeFeed() {
     const [activities, setActivities] = useState<Activity[]>([])
+    const [Search,setSearch] = useState<string>("")
 
     const fetchActivities = async () => {
         try{
@@ -60,8 +61,16 @@ function HomeFeed() {
         }
     }
 
+    const handleSearch = async () => {
+        const response = await axiosInstance.get("/activities/search",{
+            params: {search: Search}
+        })
+        setActivities(response.data.activities)
+    }
+
   return (
     <div>
+        search field : <input type="text" value={Search} onChange={(e) => setSearch(e.target.value)} /> <button onClick={handleSearch}>search</button>
       {activities.map(act => <HomeFeedCard onJoin={join} onLeave={leave} activity={{...act}} ></HomeFeedCard>)}
     </div>
   )
