@@ -3,7 +3,7 @@ import Header from '../home/Header'
 import axiosInstance from '../../utils/axiosClient';
 import type { Activity as BaseActivity } from '../../types/Activity';
 
-type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at" | "joined">
+type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at" | "joined" | "joined_count">
 function CreateActivity() {
   const [activity, setActivity] = useState<Activity>({
     title: "",

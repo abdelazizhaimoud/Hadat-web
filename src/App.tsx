@@ -8,6 +8,7 @@ import CreateActivity from './components/activity/CreateActivity'
 import ActivityDetails from './components/activity/ActivityDetails'
 import Dashboard from './components/dashboard/Dashboard'
 import Logout from './components/Logout'
+import Profile from './components/profile/Profile'
 
 function App() {
 
@@ -21,6 +22,7 @@ function App() {
         <Route path='/create-activity' element={<CreateActivity />}></Route>
         <Route path='/activity/:id' element={<ActivityDetails />}></Route>
         <Route path='/dashboard' element={<Dashboard />}></Route>
+        <Route path='/profile' element={<Profile />}></Route>
         <Route path='/logout' element={<Logout />}></Route>
       </Routes>
     </BrowserRouter>

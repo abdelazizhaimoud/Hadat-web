@@ -25,12 +25,12 @@ function Dashboard() {
   },[filter])
   return (
     <div>
+        <Header></Header>
         <select name="filter" onChange={(e) => setFilter(e.target.value)}>
           <option value="hosted" selected={true}>Hosted</option>
           <option value="membre">Membre</option>
           <option value="both">Both</option>
         </select>
-        <Header></Header>
         <div>
           {activities.map(act => <HomeFeedCard activity={act} />)}
         </div>
