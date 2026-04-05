@@ -32,7 +32,7 @@ function Dashboard() {
           <option value="both">Both</option>
         </select>
         <div>
-          {activities.map(act => <HomeFeedCard activity={act} />)}
+          {activities.map(act => <HomeFeedCard refresh={fetchUserActivities} activity={act} />)}
         </div>
     </div>
   )

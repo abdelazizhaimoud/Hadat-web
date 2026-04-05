@@ -6,13 +6,13 @@ import type { Activity } from "../../types/Activity"
 
 function HomeFeed() {
     const [activities, setActivities] = useState<Activity[]>([])
-    const [Category,setCategory] = useState<string>("")
+    const [category,setCategory] = useState<string>("")
     const [Search,setSearch] = useState<string>("")
 
     const fetchActivities = async () => {
         try{
             const response = await axiosInstance.get('/activities', {
-                params: {search: Search, category: Category}
+                params: {search: Search, category}
             })
             if (response.status == 200){
                 console.log(response.data)
@@ -74,7 +74,7 @@ function HomeFeed() {
             <option value="travel">Travel</option>
         </select><br />
          <button onClick={fetchActivities}>search</button>
-      {activities.map(act => <HomeFeedCard onJoin={join} onLeave={leave} activity={{...act}} ></HomeFeedCard>)}
+      {activities.map(act => <HomeFeedCard onJoin={join} refresh={fetchActivities} onLeave={leave} activity={{...act}} ></HomeFeedCard>)}
     </div>
   )
 }

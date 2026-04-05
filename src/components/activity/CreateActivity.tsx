@@ -5,7 +5,7 @@ import type { Activity as BaseActivity } from '../../types/Activity';
 import { categories } from '../../constants/activity';
 import { capitalize } from '../../utils/formats';
 
-type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at" | "joined" | "joined_count" | "hosted" | "status">
+type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at" | "joined" | "joined_count" | "hosted" | "status" | "comments">
 function CreateActivity() {
   const [activity, setActivity] = useState<Activity>({
     title: "",

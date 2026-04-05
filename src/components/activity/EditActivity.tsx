@@ -5,7 +5,7 @@ import axiosInstance from '../../utils/axiosClient'
 import { capitalize } from '../../utils/formats'
 import { categories, status } from '../../constants/activity'
 
-type Activity = Omit<BaseActivity, "created_at" | "updated_at" | "host" | "joined_count" | "joined" | "host_id">
+type Activity = Omit<BaseActivity, "created_at" | "updated_at" | "host" | "joined_count" | "joined" | "host_id" | "comments">
 function EditActivity() {
     const params = useParams()
     const [activity,setActivity] = useState<Activity>({
