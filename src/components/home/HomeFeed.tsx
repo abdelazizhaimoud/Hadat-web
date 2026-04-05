@@ -8,6 +8,7 @@ function HomeFeed() {
     const [activities, setActivities] = useState<Activity[]>([])
     const [category,setCategory] = useState<string>("")
     const [Search,setSearch] = useState<string>("")
+    // const [comment]
 
     const fetchActivities = async () => {
         try{
