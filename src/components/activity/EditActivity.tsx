@@ -5,7 +5,7 @@ import axiosInstance from '../../utils/axiosClient'
 import { capitalize } from '../../utils/formats'
 import { categories, status } from '../../constants/activity'
 
-type Activity = Omit<BaseActivity, "created_at" | "updated_at" | "host" | "participants" | "joined_count" | "joined" | "host_id">
+type Activity = Omit<BaseActivity, "created_at" | "updated_at" | "host" | "joined_count" | "joined" | "host_id">
 function EditActivity() {
     const params = useParams()
     const [activity,setActivity] = useState<Activity>({
@@ -21,7 +21,7 @@ function EditActivity() {
     const [loading,setLoading] = useState<boolean>(false)
     const [canEdit,setCanEdit] = useState<boolean>(false)
     const [isSubmiting,setIsSubmiting] = useState<boolean>(false)
-
+    const [isRemoving, setIsRemoving] = useState<Record<number, boolean>>({})
     const fetchActivity = async () => {
         setLoading(true)
         const response = await axiosInstance.get(`/activities/${params.id}`)
@@ -46,6 +46,12 @@ function EditActivity() {
         const response = await axiosInstance.put(`/activities/${activity.id}`,{activity: activity})
         setIsSubmiting(false)
     }
+    const handleRemove = async (membreId: number, activityId: number) => {
+        setIsRemoving((prev) => ({...prev,[membreId]: true}))
+        const response = await axiosInstance.delete(`/activities/remove/${membreId}`,{params: {activityId: activityId}})
+        setIsRemoving((prev) => ({...prev,[membreId]: false}))
+        fetchActivity()
+    }
 
     if (loading) return <div>loading ...</div>
 
@@ -66,7 +72,9 @@ function EditActivity() {
         </select>
         <input type="text" name='location' value={activity.location} onChange={handleChange} />
         <input type="date" name='date_time' value={activity.date_time} onChange={handleChange} />
-        <input type="number" name='max_participants' value={activity.max_participants} onChange={handleChange} />
+        <input type="number" name='max_participants' value={activity.max_participants} onChange={handleChange} /><br />
+        membres: <br />
+        {activity.participants?.map((membre) => <div key={membre.id}><span>{membre.name}</span> <button disabled={isRemoving[membre.id]} onClick={() => handleRemove(membre.id,activity.id)}>remove</button><br /></div>)} 
     </div>
     <button disabled={isSubmiting} onClick={handleUpdate}>Update</button>
     </>
