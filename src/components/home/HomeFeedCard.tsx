@@ -35,9 +35,13 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
       <p className="joined_count">
         joined count: {activity.joined_count} / {activity.max_participants}
       </p>
+
+      <p className="status">
+        status : {activity.status}
+      </p>
       
       <div className="actions">
-        {onJoin && !activity.joined && (activity.joined_count < activity.max_participants) && (
+        {onJoin && !activity.joined && (activity.joined_count < activity.max_participants) && (activity.status == "active") && (
           <button onClick={() => onJoin(activity.id)}>Join</button>
         )}
       </div>
