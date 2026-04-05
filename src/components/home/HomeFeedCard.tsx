@@ -46,7 +46,13 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
           <button onClick={() => onLeave(activity.id)}>Leave</button>
         )}
       </div>
-      <div><Link to={`/activity/${activity.id}`}>details</Link></div>
+      <div className="actions">
+        {activity.hosted ? (
+          <Link to={`/activity/${activity.id}/edit`}>Edit</Link>
+        ) : (
+          <Link to={`/activity/${activity.id}`}>Details</Link>
+        )}
+      </div>
       
       {children && (
         <div>

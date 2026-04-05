@@ -2,8 +2,10 @@ import { useState } from 'react';
 import Header from '../home/Header'
 import axiosInstance from '../../utils/axiosClient';
 import type { Activity as BaseActivity } from '../../types/Activity';
+import { categories } from '../../constants/activity';
+import { capitalize } from '../../utils/formats';
 
-type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at" | "joined" | "joined_count">
+type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at" | "joined" | "joined_count" | "hosted" | "status">
 function CreateActivity() {
   const [activity, setActivity] = useState<Activity>({
     title: "",
@@ -37,9 +39,9 @@ function CreateActivity() {
           <span>title : </span><input type="text" name="title" value={activity.title} onChange={handleChange} /><br />
           <span>category : </span>
             <select name="category" onChange={handleChange}>
-              <option value="sport">Sport</option>
-              <option value="outdoor">Outdoor</option>
-              <option value="travel">Travel</option>
+              {categories.map(cat => (
+                <option key={cat} value={cat}>{capitalize(cat)}</option>
+              ))}
             </select>
           <br />
           <span>location : </span><input type="text" name="location" value={activity.location} onChange={handleChange} /><br />
