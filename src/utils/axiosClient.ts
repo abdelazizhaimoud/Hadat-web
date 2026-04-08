@@ -1,7 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse, type AxiosError } from 'axios';
 
 const BASE_URL = "http://localhost:8080/api"
-const token = localStorage.getItem('auth-token')
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -9,9 +8,21 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': `Bearer ${token}`
   },
 });
+
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('auth-token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }else{
+      delete config.headers.Authorization
+    }
+    return config
+  },
+  (error) => Promise.reject(error)
+)
 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
