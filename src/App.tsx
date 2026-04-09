@@ -10,6 +10,7 @@ import Dashboard from './components/dashboard/Dashboard'
 import Logout from './components/Logout'
 import Profile from './components/profile/Profile'
 import EditActivity from './components/activity/EditActivity'
+import ProtectedRoute from './components/auth/ProtectedRoute'
 
 function App() {
 
@@ -19,13 +20,15 @@ function App() {
         <Route path='/' element={<Test />}></Route>
         <Route path='/login' element={<Login />}></Route>
         <Route path='/signup' element={<SignUp />}></Route>
-        <Route path='/home' element={<Home />}></Route>
-        <Route path='/create-activity' element={<CreateActivity />}></Route>
-        <Route path='/activity/:id' element={<ActivityDetails />}></Route>
-        <Route path='/activity/:id/edit' element={<EditActivity />}></Route>
-        <Route path='/dashboard' element={<Dashboard />}></Route>
-        <Route path='/profile' element={<Profile />}></Route>
-        <Route path='/logout' element={<Logout />}></Route>
+        <Route element={<ProtectedRoute />}>
+          <Route path='/home' element={<Home />}></Route>
+          <Route path='/create-activity' element={<CreateActivity />}></Route>
+          <Route path='/activity/:id' element={<ActivityDetails />}></Route>
+          <Route path='/activity/:id/edit' element={<EditActivity />}></Route>
+          <Route path='/dashboard' element={<Dashboard />}></Route>
+          <Route path='/profile' element={<Profile />}></Route>
+          <Route path='/logout' element={<Logout />}></Route>
+        </Route>
       </Routes>
     </BrowserRouter>
   )

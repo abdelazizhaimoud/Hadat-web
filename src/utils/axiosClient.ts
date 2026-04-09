@@ -1,7 +1,6 @@
 import axios, { type AxiosInstance, type AxiosResponse, type AxiosError } from 'axios';
 
 const BASE_URL = "http://localhost:8080/api"
-const token = localStorage.getItem('auth-token')
 
 const axiosInstance: AxiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -9,19 +8,37 @@ const axiosInstance: AxiosInstance = axios.create({
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': `Bearer ${token}`
   },
 });
 
+axiosInstance.interceptors.request.use(
+  (config) => {
+    const token = localStorage.getItem('auth-token')
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`
+    }else{
+      delete config.headers.Authorization
+    }
+    return config
+  },
+  (error) => Promise.reject(error)
+)
+type ApiError = {
+  message: string
+} 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
-  (error: AxiosError) => {
+  (error: AxiosError<ApiError>) => {
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          console.log('Unauthorized access');
+          if (error.response.data.message === 'Unauthenticated.'){
+            window.location.href = '/login'
+            localStorage.removeItem('auth-token')
+            localStorage.removeItem('user')
+          }
           break;
         case 403:
           console.log('Forbidden access');

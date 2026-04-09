@@ -16,7 +16,6 @@ function HomeFeed() {
                 params: {search: Search, category}
             })
             if (response.status == 200){
-                console.log(response.data)
                 setActivities(response.data.activities)
             }
         }catch (error){
@@ -43,7 +42,6 @@ function HomeFeed() {
     useEffect(() => {
         fetchActivities()
     },[])
-    useEffect(()=> console.log(activities),[activities])
 
     const join = async(id: number) => {
         try{

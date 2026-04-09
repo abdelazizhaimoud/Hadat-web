@@ -2,6 +2,8 @@ import {useState} from 'react'
 import axiosInstance from '../../utils/axiosClient'
 import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { setUser, setToken } from '../../features/auth/authSlice'
 
 interface Credentials {
     email: string,
@@ -12,6 +14,7 @@ function Login() {
     const [credentials, setCredentials] = useState<Credentials>({email:"",password:""})
     const [disabledSubmit, setDisabledSubmit] = useState<boolean>(false)
     const navigate = useNavigate()
+    const dispatch = useAppDispatch()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const {name,value} = e.target
@@ -29,7 +32,11 @@ const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
 
         if(response.status == 200){
             const token = response.data.token
+            const user = response.data.user
             localStorage.setItem('auth-token',token)
+            localStorage.setItem('user',JSON.stringify(user))
+            dispatch(setUser(user))
+            dispatch(setToken(token))
             console.log('logged in')
             navigate('/home')
         }
