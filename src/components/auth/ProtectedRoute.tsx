@@ -36,7 +36,7 @@ function ProtectedRoute() {
         catch (error) {
             console.log('no user')
             localStorage.removeItem("user");
-            localStorage.removeItem("token");
+            localStorage.removeItem("auth-token");
             dispatch(logout());
         }
         setLoading(false)

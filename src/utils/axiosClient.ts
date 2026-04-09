@@ -23,16 +23,22 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 )
-
+type ApiError = {
+  message: string
+} 
 axiosInstance.interceptors.response.use(
   (response: AxiosResponse) => {
     return response;
   },
-  (error: AxiosError) => {
+  (error: AxiosError<ApiError>) => {
     if (error.response) {
       switch (error.response.status) {
         case 401:
-          console.log('Unauthorized access');
+          if (error.response.data.message === 'Unauthenticated.'){
+            window.location.href = '/login'
+            localStorage.removeItem('auth-token')
+            localStorage.removeItem('user')
+          }
           break;
         case 403:
           console.log('Forbidden access');
