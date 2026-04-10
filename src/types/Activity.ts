@@ -6,7 +6,7 @@ export interface Activity {
   id: number,
   title: string,
   category: Category,
-  location: string,
+  city: string,
   date_time: string,
   max_participants: number,
   status: Status,

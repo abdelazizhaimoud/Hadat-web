@@ -10,7 +10,7 @@ function CreateActivity() {
   const [activity, setActivity] = useState<Activity>({
     title: "",
     category: "sport",
-    location: "",
+    city: "",
     date_time: new Date().toISOString().split('T')[0],
     max_participants: 0,
   })
@@ -44,7 +44,7 @@ function CreateActivity() {
               ))}
             </select>
           <br />
-          <span>location : </span><input type="text" name="location" value={activity.location} onChange={handleChange} /><br />
+          <span>city : </span><input type="text" name="city" value={activity.city} onChange={handleChange} /><br />
           <span>date_time : </span><input type="date" name="date_time" min={new Date().toISOString().split('T')[0]} value={activity.date_time} onChange={handleChange} /><br />
           <span>max_participants : </span><input type="number" name="max_participants" value={activity.max_participants} onChange={handleChange} /><br />
           <button type='submit'>Create activity</button>

@@ -48,8 +48,8 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
         {activity.date_time}
       </p>
       
-      <p className="location">
-        {activity.location}
+      <p className="city">
+        {activity.city}
       </p>
       
       <p className="category">

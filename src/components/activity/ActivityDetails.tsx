@@ -22,7 +22,7 @@ function ActivityDetails() {
         id: {Activity.id},
         title: {Activity.title},
         category: {Activity.category},
-        location: {Activity.location},
+        city: {Activity.city},
         date_time: {Activity.date_time},
         max_participants: {Activity.max_participants},
         host_id: {Activity.host_id},

@@ -12,7 +12,7 @@ function EditActivity() {
         id: 0,
         title: "",
         category: "",
-        location: "",
+        city: "",
         date_time: "",
         max_participants: 0,
         status: "",
@@ -70,7 +70,7 @@ function EditActivity() {
                 <option key={sta} value={sta}>{capitalize(sta)}</option>
             ))}
         </select>
-        <input type="text" name='location' value={activity.location} onChange={handleChange} />
+        <input type="text" name='city' value={activity.city} onChange={handleChange} />
         <input type="date" name='date_time' value={activity.date_time} onChange={handleChange} />
         <input type="number" name='max_participants' value={activity.max_participants} onChange={handleChange} /><br />
         membres: <br />
