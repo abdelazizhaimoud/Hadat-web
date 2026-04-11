@@ -1,7 +1,7 @@
 import {useState} from 'react'
 import axiosInstance from '../../utils/axiosClient'
 import axios from 'axios'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { setUser, setToken } from '../../features/auth/authSlice'
 
@@ -13,7 +13,6 @@ interface Credentials {
 function Login() {
     const [credentials, setCredentials] = useState<Credentials>({email:"",password:""})
     const [disabledSubmit, setDisabledSubmit] = useState<boolean>(false)
-    const navigate = useNavigate()
     const dispatch = useAppDispatch()
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +37,7 @@ const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
             dispatch(setUser(user))
             dispatch(setToken(token))
             console.log('logged in')
-            navigate('/home')
+            window.dispatchEvent(new Event('logged'))
         }
     }catch(error){
         if(axios.isAxiosError(error)){

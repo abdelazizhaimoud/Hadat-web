@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
-import axiosInstance from '../utils/axiosClient'
-import Header from './home/Header'
+import axiosInstance from '../../utils/axiosClient'
+import Header from '../home/Header'
 
 function Logout() {
   const handleLogout = async () => {
@@ -13,7 +13,8 @@ function Logout() {
       console.log(error)
     }finally{
       localStorage.removeItem('auth-token')
-      window.location.href = "/login"
+      localStorage.removeItem('user')
+      window.dispatchEvent(new Event('unauthorized'))
     }
   }
   useEffect(()=>{

@@ -35,9 +35,9 @@ axiosInstance.interceptors.response.use(
       switch (error.response.status) {
         case 401:
           if (error.response.data.message === 'Unauthenticated.'){
-            window.location.href = '/login'
-            localStorage.removeItem('auth-token')
-            localStorage.removeItem('user')
+              localStorage.removeItem('auth-token')
+              localStorage.removeItem('user')
+              window.dispatchEvent(new Event('unauthorized'))
           }
           break;
         case 403:
