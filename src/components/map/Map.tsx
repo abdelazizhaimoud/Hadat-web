@@ -1,56 +1,98 @@
-import React from 'react'
-import L from 'leaflet';
-import markerIcon from 'leaflet/dist/images/marker-icon.png';
-import markerShadow from 'leaflet/dist/images/marker-shadow.png';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
-import { useMapEvents } from 'react-leaflet';
+import L from "leaflet";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import { useState } from "react";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+  useMapEvents,
+} from "react-leaflet";
 
-function MapClick() {
+type LatLng = [number, number];
+
+type MapClickProps = {
+  setPosition: (pos: LatLng) => void;
+};
+
+type MapProps = {
+  create?: boolean,
+  position?: [number,number],
+  setLocation?: (pos: LatLng) => void
+}
+
+function MapClick({ setPosition }: MapClickProps) {
   useMapEvents({
     click(e) {
-      console.log(e.latlng);
+      setPosition([e.latlng.lat, e.latlng.lng]);
     },
   });
   return null;
 }
+
+// Fix marker icon
 const DefaultIcon = L.icon({
   iconUrl: markerIcon,
   shadowUrl: markerShadow,
+  iconSize: [25, 41],
+  iconAnchor: [12, 41],
+  popupAnchor: [1, -34],
+  shadowSize: [41, 41],
 });
+
+
+const logPosition = (pos: LatLng) => {
+  console.log(pos)
+}
 
 L.Marker.prototype.options.icon = DefaultIcon;
 
-const position: [number, number] = [33.5731, -7.5898]; // Casablanca
+export default function Map({ create , position = [33.5731, -7.5898] , setLocation = logPosition}: MapProps) {
+  const [selectedPosition, setSelectedPosition] = useState<LatLng | null>(null);
 
-const markers: [number, number][] = [
-  [33.57, -7.58],
-  [33.58, -7.60],
-];
+  const updatePosition = (pos: LatLng) => {
+    setSelectedPosition(pos)
+    setLocation(pos)
+  }
 
-
-
-
-
-export default function Map() {
-  return (
+  if (create) return (
     <MapContainer
       center={position}
-      zoom={13}
-      style={{ height: "400px", width: "100%" }}
+      zoom={12}
+      style={{ height: "400px", width: "400px" , cursor: "pointer"}}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; OpenStreetMap contributors"
       />
 
-      <Marker position={position}>
-        <Popup>
-          Hello from Casablanca 🚀
-        </Popup>
-      </Marker>
-      {markers.map((pos, i) => (
-        <Marker key={i} position={pos} />
-        ))}
+      // Handle clicks 
+      <MapClick setPosition={updatePosition} />
+
+      {!selectedPosition && <Marker position={position}></Marker>}
+      // User selected marker 
+      {selectedPosition && (
+        <Marker position={selectedPosition}>
+          <Popup>
+            Lat: {selectedPosition[0].toFixed(5)} <br />
+            Lng: {selectedPosition[1].toFixed(5)}
+          </Popup>
+        </Marker>
+      )}
     </MapContainer>
-  );
+  )
+  else return (
+    <MapContainer
+      center={position}
+      zoom={12}
+      style={{ height: "400px", width: "400px" , cursor: "pointer"}}
+    >
+      <TileLayer
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        attribution="&copy; OpenStreetMap contributors"
+      />
+      <Marker position={position}></Marker>
+    </MapContainer>
+  )
 }

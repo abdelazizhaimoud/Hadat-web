@@ -7,7 +7,6 @@ import { Navigate, Outlet, useLocation, useNavigate } from 'react-router-dom'
 function ProtectedRoute() {
     const [loading,setLoading] = useState<boolean>(true)
     const [isAuth,setIsAuth] = useState<boolean>(false)
-    const userStorage = localStorage.getItem('user')
     const dispatch = useAppDispatch()
     const location = useLocation()
     const navigate = useNavigate()
@@ -19,18 +18,6 @@ function ProtectedRoute() {
 
     useEffect(() => {
     const loadUser = async () => {
-        if (userStorage){
-            console.log('storage user')
-            const parsedUser = JSON.parse(userStorage)
-            dispatch(setUser(parsedUser))
-            setIsAuth(true)
-            setLoading(false)
-            if (location.pathname === '/login' || location.pathname === '/singup'){
-                navigate('/home')
-            }
-            return
-        }
-
         try {
             console.log('fetched user')
             const user = await getUser();

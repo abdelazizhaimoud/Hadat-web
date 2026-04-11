@@ -7,6 +7,8 @@ export interface Activity {
   title: string,
   category: Category,
   city: string,
+  latitude: number,
+  longitude: number,
   date_time: string,
   max_participants: number,
   status: Status,
