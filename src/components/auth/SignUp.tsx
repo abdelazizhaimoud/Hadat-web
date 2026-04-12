@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import axiosInstance from '../../utils/axiosClient'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 import { useNavigate } from 'react-router-dom'
 
 interface Data{
@@ -30,7 +31,10 @@ function SignUp() {
             if (response.status == 201){
                 console.log('user signed up successfully !')
                 const token = response.data.token
+                const user = response.data.user
                 localStorage.setItem('auth-token',token)
+                localStorage.setItem('user',user)
+                window.dispatchEvent(new Event('logged'))
                 navigate('/home')
             }
         }catch (error){
@@ -57,11 +61,67 @@ function SignUp() {
         }
     }
   return (
-    <form onSubmit={handleSubmit}>
-        <div>name : </div><input type="text" name="name"  value={data.name} onChange={handleChange}/><br />
-        <div>email : </div><input type="email" name="email"  value={data.email} onChange={handleChange}/><br />
-        <div>password : </div><input type="password" name="password"  value={data.password} onChange={handleChange}/><br />
-        <button type='submit' disabled={disabledSubmit}>Sign up</button>
+    <form className='auth-form' onSubmit={handleSubmit}>
+        <h1 className='auth-title'>Sign up</h1>
+
+        <div className='auth-field'>
+            <label className='auth-label' htmlFor='signup-name'>Name</label>
+            <input
+                id='signup-name'
+                className='auth-input'
+                type='text'
+                name='name'
+                value={data.name}
+                onChange={handleChange}
+                autoComplete='name'
+                required
+            />
+        </div>
+
+        <div className='auth-field'>
+            <label className='auth-label' htmlFor='signup-email'>Email</label>
+            <input
+                id='signup-email'
+                className='auth-input'
+                type='email'
+                name='email'
+                value={data.email}
+                onChange={handleChange}
+                autoComplete='email'
+                required
+            />
+        </div>
+
+        <div className='auth-field'>
+            <label className='auth-label' htmlFor='signup-password'>Password</label>
+            <input
+                id='signup-password'
+                className='auth-input'
+                type='password'
+                name='password'
+                value={data.password}
+                onChange={handleChange}
+                autoComplete='new-password'
+                required
+            />
+        </div>
+
+        <div className='auth-actions'>
+            <button
+                className='auth-button auth-button--primary'
+                type='submit'
+                disabled={disabledSubmit}
+            >
+                Sign up
+            </button>
+
+            <div className='auth-meta'>
+                already have an account?{' '}
+                <Link className='auth-link' to='/login'>
+                    login
+                </Link>
+            </div>
+        </div>
     </form>
   )
 }

@@ -12,6 +12,7 @@ import Profile from './components/profile/Profile'
 import EditActivity from './components/activity/EditActivity'
 import ProtectedRoute from './components/auth/ProtectedRoute'
 import Map from './components/map/Map'
+import AuthLayout from './layouts/AuthLayout'
 
 function App() {
 
@@ -20,8 +21,10 @@ function App() {
       <Routes>
         <Route path='/' element={<Test />}></Route>
         <Route element={<ProtectedRoute />}>
+        <Route element={<AuthLayout />}>
           <Route path='/login' element={<Login />}></Route>
           <Route path='/signup' element={<SignUp />}></Route>
+        </Route>
           <Route path='/home' element={<Home />}></Route>
           <Route path='/create-activity' element={<CreateActivity />}></Route>
           <Route path='/activity/:id' element={<ActivityDetails />}></Route>
