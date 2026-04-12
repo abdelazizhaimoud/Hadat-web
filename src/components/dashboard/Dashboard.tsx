@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useCallback, useEffect } from 'react'
 import axiosInstance from '../../utils/axiosClient'
 import type { Activity } from '../../types/Activity'
 import HomeFeedCard from '../home/HomeFeedCard'
@@ -12,7 +12,7 @@ function Dashboard() {
   const activities: Activity[] = storeDashboardActivities ?? []
   const filter = useAppSelector((state) => state.activities.filter)
 
-  const fetchUserActivities = async() => {
+  const fetchUserActivities = useCallback(async() => {
     try{
       const response = await axiosInstance.get('/activities/me', {
         params: {filter}
@@ -21,12 +21,12 @@ function Dashboard() {
     }catch(error){
       console.log(error)
     }
-  }
+  }, [dispatch, filter])
   useEffect(() => {
     if (storeDashboardActivities === null) {
-      fetchUserActivities()
+            void fetchUserActivities()
     }
-  }, [storeDashboardActivities])
+    },[fetchUserActivities, storeDashboardActivities])
 
   return (
     <div>

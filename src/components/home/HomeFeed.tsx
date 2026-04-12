@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import axiosInstance from "../../utils/axiosClient"
 import axios from "axios"
 import HomeFeedCard from "./HomeFeedCard"
@@ -14,7 +14,7 @@ function HomeFeed() {
     const [search,setSearch] = useState<string>("")
     const [isLoading, setIsLoading] = useState<boolean>(false)
 
-    const fetchActivities = async () => {
+    const fetchActivities = useCallback(async () => {
         setIsLoading(true)
         try{
             const response = await axiosInstance.get('/activities', {
@@ -45,18 +45,18 @@ function HomeFeed() {
         } finally {
             setIsLoading(false)
         }
-    }
+    }, [category, dispatch, search])
 
     useEffect(() => {
         if (storeHomeActivities === null) { 
-            fetchActivities()
+            void fetchActivities()
         }
-    },[storeHomeActivities])
+    },[fetchActivities, storeHomeActivities])
 
     const join = async(id: number) => {
         try{
             await axiosInstance.post(`/activities/${id}/join`)
-            fetchActivities()
+            void fetchActivities()
         }catch(error){
             console.log(error)
         }
@@ -65,7 +65,7 @@ function HomeFeed() {
     const leave = async(id: number) => {
         try{
             await axiosInstance.delete(`/activities/${id}/leave`)
-            fetchActivities()
+            void fetchActivities()
         }catch(error){
             console.log(error)
         }
