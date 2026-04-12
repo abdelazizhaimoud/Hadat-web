@@ -2,6 +2,7 @@ import { useCallback, useEffect } from 'react'
 import axiosInstance from '../../utils/axiosClient'
 import type { Activity } from '../../types/Activity'
 import HomeFeedCard from '../home/HomeFeedCard'
+import FilterBar from '../ui/FilterBar'
 import { useAppDispatch, useAppSelector } from '../../app/hooks'
 import { setDashboardActivities, setFilter } from '../../features/activities/activitiesSlice'
 
@@ -30,14 +31,12 @@ function Dashboard() {
 
   return (
     <div>
-        <select name="filter" value={filter} onChange={(e) => dispatch(setFilter(e.target.value))}>
-          <option value="hosted">Hosted</option>
-          <option value="membre">Membre</option>
-          <option value="both">Both</option>
-        </select>
-        <div>
-          {activities.map(act => <HomeFeedCard key={act.id} refresh={fetchUserActivities} activity={act} />)}
-        </div>
+      <FilterBar value={filter ?? 'both'} onChange={(v) => dispatch(setFilter(v))} />
+      <div>
+        {activities.map((act) => (
+          <HomeFeedCard key={act.id} refresh={fetchUserActivities} activity={act} />
+        ))}
+      </div>
     </div>
   )
 }

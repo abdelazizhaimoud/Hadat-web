@@ -1,0 +1,48 @@
+.filter-bar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin:12px 0;
+}
+
+.filter-seg{
+  display:flex;
+  gap:6px;
+  padding:4px;
+  background:var(--color-surface);
+  border-radius:var(--r-full);
+  border:1px solid var(--color-border);
+  box-shadow:var(--shadow-1);
+}
+
+.fb-btn{
+  appearance:none;
+  border:0;
+  background:transparent;
+  padding:8px 12px;
+  border-radius:var(--r-full);
+  color:var(--color-text-secondary);
+  cursor:pointer;
+  font-weight:500;
+}
+
+.fb-btn:hover{ background:var(--color-border-hover); }
+
+.fb-btn.active{
+  background:var(--color-accent);
+  color:var(--color-text-on-brand);
+}
+
+.filter-actions{ display:flex; gap:8px; }
+
+.fb-reset{
+  background:transparent;
+  border:1px solid var(--color-border);
+  padding:6px 10px;
+  border-radius:var(--r-md);
+  color:var(--color-text-secondary);
+  cursor:pointer;
+}
+
+.fb-reset:hover{ background:var(--color-border-hover); }
