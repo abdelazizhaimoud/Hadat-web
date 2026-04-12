@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, type FormEvent } from 'react';
 import axiosInstance from '../../utils/axiosClient';
 import type { Activity as BaseActivity } from '../../types/Activity';
 import { categories } from '../../constants/activity';
@@ -23,7 +23,7 @@ function CreateActivity() {
   const [location,setLocation] = useState<[number,number]>(DefaultLocation)
   const [toggleMap,setToggleMap] = useState<boolean>(false)
   
-  const handleSubmit = async (e: React.ChangeEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     try{
       if ((location[0] === DefaultLocation[0] && location[1] === DefaultLocation[1]) || toggleMap ){
@@ -54,6 +54,7 @@ function CreateActivity() {
           </p>
         </header>
 
+        <article className='activity-form-card'>
         <form className='activity-form' onSubmit={handleSubmit}>
           <div className='activity-grid'>
             <label className='activity-field'>
@@ -86,7 +87,7 @@ function CreateActivity() {
             </label>
           </div>
 
-          <section className='activity-panel'>
+          <section className='activity-panel activity-panel--location'>
             <div className='activity-panel__header'>
               <div>
                 <h2 className='activity-panel__title'>Location</h2>
@@ -94,7 +95,7 @@ function CreateActivity() {
               </div>
 
               <button
-                className='activity-button activity-button--ghost'
+                className='activity-button activity-button--accent'
                 type='button'
                 onClick={() => setToggleMap((prev) => !prev)}
               >
@@ -121,6 +122,7 @@ function CreateActivity() {
             </button>
           </div>
         </form>
+        </article>
       </div>
     </section>
   )

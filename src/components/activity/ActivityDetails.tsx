@@ -70,15 +70,15 @@ function ActivityDetails() {
               </div>
             </div>
 
-            <div className='activity-map-panel activity-map-panel--details'>
+            <div className='activity-map-panel activity-map-panel--accent'>
               <Map position={[activity.latitude,activity.longitude]} />
             </div>
           </div>
 
-          <section className='activity-participants'>
+          <section className='activity-participants activity-panel activity-panel--participants'>
             <h2 className='activity-panel__title'>Participants</h2>
             {activity.participants && activity.participants.length > 0 ? (
-              <div className='activity-participants__list'>
+              <div className='activity-participants__list activity-participants__list--details'>
                 {activity.participants.map(ele => (
                   <div key={ele.id} className='activity-participants__item'>
                     {ele.name}

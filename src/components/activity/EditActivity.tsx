@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState, type ChangeEvent, type FormEvent } from 'react'
 import { useParams } from 'react-router-dom'
 import type { Activity as BaseActivity } from '../../types/Activity'
 import axiosInstance from '../../utils/axiosClient'
@@ -43,12 +43,12 @@ function EditActivity() {
         void fetchActivity()
     },[fetchActivity])
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
         const {name,value} = e.target
         setActivity({...activity,[name]: value})
     }
-        const handleUpdate = async (e: React.ChangeEvent<HTMLFormElement>) => {
-                e.preventDefault()
+    const handleUpdate = async (e: FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         if ((location[0] === activity.latitude && location[1] === activity.longitude) || toggleMap ){
             console.log("save a location first")
         }else{
@@ -94,7 +94,7 @@ function EditActivity() {
                         </header>
 
                         <form className='activity-form' onSubmit={handleUpdate}>
-                            <div className='activity-grid activity-grid--two'>
+                            <div className='activity-grid'>
                                 <label className='activity-field'>
                                     <span className='activity-label'>Title</span>
                                     <input className='activity-input' type='text' name='title' value={activity.title} onChange={handleChange} />
@@ -134,7 +134,7 @@ function EditActivity() {
                                 </label>
                             </div>
 
-                            <section className='activity-panel'>
+                            <section className='activity-panel activity-panel--location'>
                                 <div className='activity-panel__header'>
                                     <div>
                                         <h2 className='activity-panel__title'>Location</h2>
@@ -142,7 +142,7 @@ function EditActivity() {
                                     </div>
 
                                     <button
-                                        className='activity-button activity-button--ghost'
+                                        className='activity-button activity-button--accent'
                                         type='button'
                                         onClick={() => setToggleMap((prev) => !prev)}
                                     >
@@ -161,7 +161,7 @@ function EditActivity() {
                                 )}
                             </section>
 
-                            <section className='activity-panel'>
+                            <section className='activity-panel activity-panel--participants'>
                                 <h2 className='activity-panel__title'>Participants</h2>
                                 {activity.participants && activity.participants.length > 0 ? (
                                     <div className='activity-participants__list'>
