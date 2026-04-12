@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import Test from './components/Test'
 import Login from './components/auth/Login'
 import Home from './components/home/Home'
@@ -7,7 +7,6 @@ import SignUp from './components/auth/SignUp'
 import CreateActivity from './components/activity/CreateActivity'
 import ActivityDetails from './components/activity/ActivityDetails'
 import Dashboard from './components/dashboard/Dashboard'
-import Logout from './components/auth/Logout'
 import Profile from './components/profile/Profile'
 import EditActivity from './components/activity/EditActivity'
 import ProtectedRoute from './components/auth/ProtectedRoute'
@@ -34,7 +33,7 @@ function App() {
             <Route path='/dashboard' element={<Dashboard />}></Route>
             <Route path='/profile' element={<Profile />}></Route>
             <Route path='/map' element={<Map />}></Route>
-            <Route path='/logout' element={<Logout />}></Route>
+            <Route path='/logout' element={<Navigate to='/home' replace />}></Route>
           </Route>
         </Route>
       </Routes>

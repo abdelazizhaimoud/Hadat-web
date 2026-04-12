@@ -142,12 +142,33 @@
 }
 
 .app-nav {
+  position: relative;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
 }
 
+.app-nav__slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background: var(--color-brand-subtle);
+  border: 1px solid var(--color-border-brand);
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-1);
+  transition:
+    transform 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    width 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    height 240ms cubic-bezier(0.2, 0.8, 0.2, 1),
+    opacity 140ms ease-in-out;
+  will-change: transform, width, height;
+  pointer-events: none;
+}
+
 .app-nav__link {
+  position: relative;
+  z-index: 1;
   text-decoration: none;
   color: var(--color-text-secondary);
   padding: 8px 10px;
@@ -155,15 +176,25 @@
   border: 1px solid transparent;
 }
 
+.app-nav__link--button {
+  background: transparent;
+  font: inherit;
+  cursor: pointer;
+}
+
 .app-nav__link:hover {
-  background: var(--color-brand-subtle);
   color: var(--color-text-primary);
 }
 
 .app-nav__link.is-active {
-  background: var(--color-brand-subtle);
   color: var(--color-text-brand);
-  border-color: var(--color-border-brand);
+}
+
+.app-nav__item {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
 }
 
 .app-main {
@@ -173,4 +204,61 @@
 .app-container {
   max-width: 1100px;
   margin: 0 auto;
+}
+
+.app-popover {
+  position: absolute;
+  right: 0;
+  top: calc(100% + 10px);
+  width: 240px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-3);
+  padding: 12px;
+}
+
+.app-popover__title {
+  font-size: 14px;
+  color: var(--color-text-primary);
+  margin-bottom: 10px;
+}
+
+.app-popover__actions {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.app-button {
+  border: 0;
+  border-radius: var(--r-md);
+  padding: 8px 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.app-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.app-button--ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+}
+
+.app-button--ghost:hover {
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+
+.app-button--danger {
+  background: var(--color-danger);
+  color: var(--color-text-on-brand);
+}
+
+.app-button--danger:hover {
+  filter: brightness(0.95);
 }
