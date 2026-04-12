@@ -3,6 +3,9 @@ import { useParams } from 'react-router-dom'
 import type { Activity } from '../../types/Activity'
 import axiosInstance from '../../utils/axiosClient'
 import Map from '../map/Map'
+import ParticipantsList from '../ui/ParticipantsList'
+import InfoRow from '../ui/InfoRow'
+import StatusBadge from '../ui/StatusBadge'
 
 function ActivityDetails() {
     const params = useParams()
@@ -41,33 +44,16 @@ function ActivityDetails() {
               <p className='activity-hero__eyebrow'>Activity details</p>
               <h1 className='activity-details__title'>{activity.title}</h1>
             </div>
-            <span className={`activity-status activity-status--${activity.status}`}>
-              {activity.status}
-            </span>
+            <StatusBadge status={activity.status} baseClassName='activity-status' />
           </header>
 
           <div className='activity-details__grid'>
             <div className='activity-details__card'>
-              <div className='activity-details__row'>
-                <span className='activity-details__label'>Category</span>
-                <span className='activity-details__value'>{activity.category}</span>
-              </div>
-              <div className='activity-details__row'>
-                <span className='activity-details__label'>City</span>
-                <span className='activity-details__value'>{activity.city}</span>
-              </div>
-              <div className='activity-details__row'>
-                <span className='activity-details__label'>Date and time</span>
-                <span className='activity-details__value'>{activity.date_time}</span>
-              </div>
-              <div className='activity-details__row'>
-                <span className='activity-details__label'>Participants</span>
-                <span className='activity-details__value'>{activity.joined_count} / {activity.max_participants}</span>
-              </div>
-              <div className='activity-details__row'>
-                <span className='activity-details__label'>Host</span>
-                <span className='activity-details__value'>{activity.host?.name ?? 'Unknown'}</span>
-              </div>
+              <InfoRow label='Category' value={activity.category} />
+              <InfoRow label='City' value={activity.city} />
+              <InfoRow label='Date and time' value={activity.date_time} />
+              <InfoRow label='Participants' value={`${activity.joined_count} / ${activity.max_participants}`} />
+              <InfoRow label='Host' value={activity.host?.name ?? 'Unknown'} />
             </div>
 
             <div className='activity-map-panel activity-map-panel--accent'>
@@ -78,13 +64,10 @@ function ActivityDetails() {
           <section className='activity-participants activity-panel activity-panel--participants'>
             <h2 className='activity-panel__title'>Participants</h2>
             {activity.participants && activity.participants.length > 0 ? (
-              <div className='activity-participants__list activity-participants__list--details'>
-                {activity.participants.map(ele => (
-                  <div key={ele.id} className='activity-participants__item'>
-                    {ele.name}
-                  </div>
-                ))}
-              </div>
+              <ParticipantsList
+                participants={activity.participants}
+                listClassName='activity-participants__list--details'
+              />
             ) : (
               <div className='activity-state'>No participants yet.</div>
             )}

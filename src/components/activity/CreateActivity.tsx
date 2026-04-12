@@ -1,9 +1,11 @@
-import { useState, type FormEvent } from 'react';
+import { useState, type ChangeEvent, type FormEvent } from 'react';
 import axiosInstance from '../../utils/axiosClient';
 import type { Activity as BaseActivity } from '../../types/Activity';
 import { categories } from '../../constants/activity';
 import { capitalize } from '../../utils/formats';
 import Map from '../map/Map';
+import FormField from '../ui/FormField';
+import FormSelect from '../ui/FormSelect';
 
 type Activity = Omit<BaseActivity, "id" | "host_id" | "created_at" | "updated_at" | "joined" | "joined_count" | "hosted" | "status" | "comments">
 
@@ -22,6 +24,10 @@ function CreateActivity() {
   })
   const [location,setLocation] = useState<[number,number]>(DefaultLocation)
   const [toggleMap,setToggleMap] = useState<boolean>(false)
+  const categoryOptions = categories.map((cat) => ({
+    value: cat,
+    label: capitalize(cat),
+  }))
   
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -39,7 +45,7 @@ function CreateActivity() {
     }
   }
   
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const {name,value} = e.target
     setActivity((prev) => ({...prev, [name]: value}))
   }
@@ -57,34 +63,44 @@ function CreateActivity() {
         <article className='activity-form-card'>
         <form className='activity-form' onSubmit={handleSubmit}>
           <div className='activity-grid'>
-            <label className='activity-field'>
-              <span className='activity-label'>Title</span>
-              <input className='activity-input' type='text' name='title' value={activity.title} onChange={handleChange} />
-            </label>
+            <FormField
+              label='Title'
+              name='title'
+              value={activity.title}
+              onChange={handleChange}
+            />
 
-            <label className='activity-field'>
-              <span className='activity-label'>Category</span>
-              <select className='activity-select' name='category' value={activity.category} onChange={handleChange}>
-                {categories.map(cat => (
-                  <option key={cat} value={cat}>{capitalize(cat)}</option>
-                ))}
-              </select>
-            </label>
+            <FormSelect
+              label='Category'
+              name='category'
+              value={activity.category}
+              options={categoryOptions}
+              onChange={handleChange}
+            />
 
-            <label className='activity-field'>
-              <span className='activity-label'>City</span>
-              <input className='activity-input' type='text' name='city' value={activity.city} onChange={handleChange} />
-            </label>
+            <FormField
+              label='City'
+              name='city'
+              value={activity.city}
+              onChange={handleChange}
+            />
 
-            <label className='activity-field'>
-              <span className='activity-label'>Date and time</span>
-              <input className='activity-input' type='date' name='date_time' min={today} value={activity.date_time} onChange={handleChange} />
-            </label>
+            <FormField
+              label='Date and time'
+              type='date'
+              name='date_time'
+              min={today}
+              value={activity.date_time}
+              onChange={handleChange}
+            />
 
-            <label className='activity-field'>
-              <span className='activity-label'>Max participants</span>
-              <input className='activity-input' type='number' name='max_participants' value={activity.max_participants} onChange={handleChange} />
-            </label>
+            <FormField
+              label='Max participants'
+              type='number'
+              name='max_participants'
+              value={activity.max_participants}
+              onChange={handleChange}
+            />
           </div>
 
           <section className='activity-panel activity-panel--location'>

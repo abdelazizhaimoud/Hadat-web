@@ -5,6 +5,9 @@ import axiosInstance from '../../utils/axiosClient'
 import { capitalize } from '../../utils/formats'
 import { categories, status } from '../../constants/activity'
 import Map from '../map/Map'
+import FormField from '../ui/FormField'
+import FormSelect from '../ui/FormSelect'
+import ParticipantsList from '../ui/ParticipantsList'
 
 type Activity = Omit<BaseActivity, "created_at" | "updated_at" | "host" | "joined_count" | "joined" | "host_id" | "comments">
 function EditActivity() {
@@ -26,6 +29,14 @@ function EditActivity() {
     const [isRemoving, setIsRemoving] = useState<Record<number, boolean>>({})
     const [location,setLocation] = useState<[number,number]>([activity.latitude,activity.longitude])
     const [toggleMap,setToggleMap] = useState<boolean>(false)
+    const categoryOptions = categories.map((cat) => ({
+        value: cat,
+        label: capitalize(cat),
+    }))
+    const statusOptions = status.map((sta) => ({
+        value: sta,
+        label: capitalize(sta),
+    }))
     const canEdit = activity.hosted
     const fetchActivity = useCallback(async () => {
             setLoading(true)
@@ -95,43 +106,51 @@ function EditActivity() {
 
                         <form className='activity-form' onSubmit={handleUpdate}>
                             <div className='activity-grid'>
-                                <label className='activity-field'>
-                                    <span className='activity-label'>Title</span>
-                                    <input className='activity-input' type='text' name='title' value={activity.title} onChange={handleChange} />
-                                </label>
+                                <FormField
+                                    label='Title'
+                                    name='title'
+                                    value={activity.title}
+                                    onChange={handleChange}
+                                />
 
-                                <label className='activity-field'>
-                                    <span className='activity-label'>Category</span>
-                                    <select className='activity-select' name='category' value={activity.category} onChange={handleChange}>
-                                        {categories.map(cat => (
-                                            <option key={cat} value={cat}>{capitalize(cat)}</option>
-                                        ))}
-                                    </select>
-                                </label>
+                                <FormSelect
+                                    label='Category'
+                                    name='category'
+                                    value={activity.category}
+                                    options={categoryOptions}
+                                    onChange={handleChange}
+                                />
 
-                                <label className='activity-field'>
-                                    <span className='activity-label'>Status</span>
-                                    <select className='activity-select' name='status' value={activity.status} onChange={handleChange}>
-                                        {status.map(sta => (
-                                            <option key={sta} value={sta}>{capitalize(sta)}</option>
-                                        ))}
-                                    </select>
-                                </label>
+                                <FormSelect
+                                    label='Status'
+                                    name='status'
+                                    value={activity.status}
+                                    options={statusOptions}
+                                    onChange={handleChange}
+                                />
 
-                                <label className='activity-field'>
-                                    <span className='activity-label'>City</span>
-                                    <input className='activity-input' type='text' name='city' value={activity.city} onChange={handleChange} />
-                                </label>
+                                <FormField
+                                    label='City'
+                                    name='city'
+                                    value={activity.city}
+                                    onChange={handleChange}
+                                />
 
-                                <label className='activity-field'>
-                                    <span className='activity-label'>Date and time</span>
-                                    <input className='activity-input' type='date' name='date_time' value={activity.date_time} onChange={handleChange} />
-                                </label>
+                                <FormField
+                                    label='Date and time'
+                                    type='date'
+                                    name='date_time'
+                                    value={activity.date_time}
+                                    onChange={handleChange}
+                                />
 
-                                <label className='activity-field'>
-                                    <span className='activity-label'>Max participants</span>
-                                    <input className='activity-input' type='number' name='max_participants' value={activity.max_participants} onChange={handleChange} />
-                                </label>
+                                <FormField
+                                    label='Max participants'
+                                    type='number'
+                                    name='max_participants'
+                                    value={activity.max_participants}
+                                    onChange={handleChange}
+                                />
                             </div>
 
                             <section className='activity-panel activity-panel--location'>
@@ -164,21 +183,12 @@ function EditActivity() {
                             <section className='activity-panel activity-panel--participants'>
                                 <h2 className='activity-panel__title'>Participants</h2>
                                 {activity.participants && activity.participants.length > 0 ? (
-                                    <div className='activity-participants__list'>
-                                        {activity.participants.map((membre) => (
-                                            <div key={membre.id} className='activity-participants__item activity-participants__item--editable'>
-                                                <span>{membre.name}</span>
-                                                <button
-                                                    className='activity-button activity-button--danger'
-                                                    type='button'
-                                                    disabled={isRemoving[membre.id]}
-                                                    onClick={() => handleRemove(membre.id,activity.id)}
-                                                >
-                                                    {isRemoving[membre.id] ? 'Removing...' : 'Remove'}
-                                                </button>
-                                            </div>
-                                        ))}
-                                    </div>
+                                    <ParticipantsList
+                                        participants={activity.participants}
+                                        editable
+                                        isRemoving={isRemoving}
+                                        onRemove={(participantId) => handleRemove(participantId, activity.id)}
+                                    />
                                 ) : (
                                     <div className='activity-state'>No participants yet.</div>
                                 )}

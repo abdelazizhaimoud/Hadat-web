@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import type { Activity } from '../../types/Activity';
 import axiosInstance from '../../utils/axiosClient';
 import { useAppSelector } from '../../app/hooks';
+import InfoRow from '../ui/InfoRow';
+import StatusBadge from '../ui/StatusBadge';
 
 interface ActivityCardProps {
   activity: Activity;
@@ -59,28 +61,14 @@ const ActivityCard: React.FC<ActivityCardProps> = ({
     <article className='home-card'>
       <div className='home-card__header'>
         <h3 className='home-card__title'>{activity.title}</h3>
-        <span className={`home-card__status home-card__status--${activity.status}`}>
-          {activity.status}
-        </span>
+        <StatusBadge status={activity.status} baseClassName='home-card__status' />
       </div>
 
       <div className='home-card__meta'>
-        <div className='home-card__meta-item'>
-          <span className='home-card__meta-label'>Date</span>
-          <span>{activity.date_time}</span>
-        </div>
-        <div className='home-card__meta-item'>
-          <span className='home-card__meta-label'>City</span>
-          <span>{activity.city}</span>
-        </div>
-        <div className='home-card__meta-item'>
-          <span className='home-card__meta-label'>Category</span>
-          <span>{activity.category || 'General'}</span>
-        </div>
-        <div className='home-card__meta-item'>
-          <span className='home-card__meta-label'>Participants</span>
-          <span>{activity.joined_count} / {activity.max_participants}</span>
-        </div>
+        <InfoRow variant='meta' label='Date' value={activity.date_time} />
+        <InfoRow variant='meta' label='City' value={activity.city} />
+        <InfoRow variant='meta' label='Category' value={activity.category || 'General'} />
+        <InfoRow variant='meta' label='Participants' value={`${activity.joined_count} / ${activity.max_participants}`} />
       </div>
 
       <section className='home-card__comments'>
