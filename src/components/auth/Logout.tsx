@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import axiosInstance from '../../utils/axiosClient'
-import Header from '../home/Header'
 
 function Logout() {
   const handleLogout = async () => {
@@ -22,7 +21,6 @@ function Logout() {
   },[])
   return (
     <div>
-        <Header></Header>
       logging out .....
     </div>
   )

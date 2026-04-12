@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Header from '../home/Header'
 import axiosInstance from '../../utils/axiosClient';
 import type { Activity as BaseActivity } from '../../types/Activity';
 import { categories } from '../../constants/activity';
@@ -45,7 +44,6 @@ function CreateActivity() {
   }
   return (
     <div>
-        <Header></Header>
         <form onSubmit={handleSubmit}>
           <span>title : </span><input type="text" name="title" value={activity.title} onChange={handleChange} /><br />
           <span>category : </span>

@@ -1,5 +1,4 @@
 import { useEffect, useState } from 'react'
-import Header from '../home/Header'
 import axiosInstance from '../../utils/axiosClient'
 import type { Activity } from '../../types/Activity'
 import HomeFeedCard from '../home/HomeFeedCard'
@@ -25,7 +24,6 @@ function Dashboard() {
   },[filter])
   return (
     <div>
-        <Header></Header>
         <select name="filter" onChange={(e) => setFilter(e.target.value)}>
           <option value="hosted" selected={true}>Hosted</option>
           <option value="membre">Membre</option>

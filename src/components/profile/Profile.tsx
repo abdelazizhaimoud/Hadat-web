@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import type { User as BaseUser } from "../../types/User"
 import axiosInstance from "../../utils/axiosClient"
-import Header from "../home/Header"
 
 
 type User = Omit<BaseUser, "id" | "avatar">
@@ -37,7 +36,6 @@ function Profile() {
     if (!User) return <span>Loading ...</span>
   return (
     <>
-        <Header></Header>
         {isEditing && <button onClick={() => [handleProfileUpdate(),setIsEditing((prev) => !prev)]}>Update</button>}
         {!isEditing && <button onClick={() => setIsEditing((prev) => !prev)}>Edit</button>}
         {!isEditing && <div>
