@@ -1,38 +1,42 @@
-import { useEffect, useState } from 'react'
-import Header from '../home/Header'
+import { useEffect } from 'react'
 import axiosInstance from '../../utils/axiosClient'
 import type { Activity } from '../../types/Activity'
 import HomeFeedCard from '../home/HomeFeedCard'
+import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { setDashboardActivities, setFilter } from '../../features/activities/activitiesSlice'
 
 
 function Dashboard() {
-  const [activities, setActivities] = useState<Activity[]>([])
-  const [filter, setFilter] = useState<string>("hosted")
-
+  const dispatch = useAppDispatch()
+  const storeDashboardActivities = useAppSelector((state) => state.activities.dashboard)
+  const activities: Activity[] = storeDashboardActivities ?? []
+  const filter = useAppSelector((state) => state.activities.filter)
 
   const fetchUserActivities = async() => {
     try{
       const response = await axiosInstance.get('/activities/me', {
         params: {filter}
       })
-      setActivities(response.data.activities)
+      dispatch(setDashboardActivities(response.data.activities))
     }catch(error){
       console.log(error)
     }
   }
-  useEffect(()=>{
-    fetchUserActivities()
-  },[filter])
+  useEffect(() => {
+    if (storeDashboardActivities === null) {
+      fetchUserActivities()
+    }
+  }, [storeDashboardActivities])
+
   return (
     <div>
-        <Header></Header>
-        <select name="filter" onChange={(e) => setFilter(e.target.value)}>
-          <option value="hosted" selected={true}>Hosted</option>
+        <select name="filter" value={filter} onChange={(e) => dispatch(setFilter(e.target.value))}>
+          <option value="hosted">Hosted</option>
           <option value="membre">Membre</option>
           <option value="both">Both</option>
         </select>
         <div>
-          {activities.map(act => <HomeFeedCard refresh={fetchUserActivities} activity={act} />)}
+          {activities.map(act => <HomeFeedCard key={act.id} refresh={fetchUserActivities} activity={act} />)}
         </div>
     </div>
   )

@@ -1,8 +1,8 @@
-import {useState} from 'react'
+import { useState } from 'react'
 import axiosInstance from '../../utils/axiosClient'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
-import { useAppDispatch, useAppSelector } from '../../app/hooks'
+import { useAppDispatch } from '../../app/hooks'
 import { setUser, setToken } from '../../features/auth/authSlice'
 
 interface Credentials {
@@ -66,15 +66,53 @@ const handleLogin = async (e: React.ChangeEvent<HTMLFormElement>) => {
     }
 }
   return (
-    <form onSubmit={handleLogin}>
-        <div>email:</div>
-        <input type="email" name="email" value={credentials.email} onChange={handleChange}/>
-        <br />
-        <div>password:</div>
-        <input type="password" name="password" value={credentials.password} onChange={handleChange}/>
-        <br />
-        <span>you don't have an account? <Link to="/signup">create one !</Link></span><br />
-        <button type='submit' disabled={disabledSubmit}>Login</button>
+    <form className='auth-form' onSubmit={handleLogin}>
+        <h1 className='auth-title'>Login</h1>
+
+        <div className='auth-field'>
+            <label className='auth-label' htmlFor='login-email'>Email</label>
+            <input
+                id='login-email'
+                className='auth-input'
+                type='email'
+                name='email'
+                value={credentials.email}
+                onChange={handleChange}
+                autoComplete='email'
+                required
+            />
+        </div>
+
+        <div className='auth-field'>
+            <label className='auth-label' htmlFor='login-password'>Password</label>
+            <input
+                id='login-password'
+                className='auth-input'
+                type='password'
+                name='password'
+                value={credentials.password}
+                onChange={handleChange}
+                autoComplete='current-password'
+                required
+            />
+        </div>
+
+        <div className='auth-actions'>
+            <button
+                className='auth-button auth-button--primary'
+                type='submit'
+                disabled={disabledSubmit}
+            >
+                Login
+            </button>
+
+            <div className='auth-meta'>
+                you don't have an account?{' '}
+                <Link className='auth-link' to='/signup'>
+                    create one!
+                </Link>
+            </div>
+        </div>
     </form>
   )
 }

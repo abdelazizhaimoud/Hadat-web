@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=PT+Sans:ital,wght@0,400;0,700;1,400;1,700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+:root {
+  /* ── Primary ramp – Honey Orange ── */
+  --color-honey-50:  #FFF8F0;
+  --color-honey-100: #FDECD8;
+  --color-honey-200: #F9D4A8;
+  --color-honey-300: #F2B46A;
+  --color-honey-400: #E8912E;
+  --color-honey-500: #D4751A; /* brand default */
+  --color-honey-600: #B85D0F;
+  --color-honey-700: #8F4509;
+  --color-honey-800: #6B3207;
+  --color-honey-900: #471F04;
+
+  /* ── Accent ramp – Golden Amber ── */
+  --color-amber-50:  #FFFBF0;
+  --color-amber-100: #FEF3D0;
+  --color-amber-200: #FBE09A;
+  --color-amber-300: #F4C454;
+  --color-amber-400: #D4A017; /* accent default */
+  --color-amber-500: #B07B0C;
+  --color-amber-600: #9A6E08;
+  --color-amber-700: #7A5304;
+  --color-amber-800: #5C3C02;
+  --color-amber-900: #3D2601;
+
+  /* ── Neutral ramp – Warm Gray ── */
+  --color-neutral-50:  #FAFAF8;
+  --color-neutral-100: #F4F3F0;
+  --color-neutral-200: #E8E6E1;
+  --color-neutral-300: #D2CFC8;
+  --color-neutral-400: #B0ACA4;
+  --color-neutral-500: #8C8880;
+  --color-neutral-600: #5E5A54;
+  --color-neutral-700: #3E3C38;
+  --color-neutral-800: #2C2A27;
+  --color-neutral-900: #1A1916;
+
+  /* ── Semantic roles ── */
+  --color-brand:         var(--color-honey-500);
+  --color-brand-hover:   var(--color-honey-600);
+  --color-brand-active:  var(--color-honey-700);
+  --color-brand-subtle:  var(--color-honey-100);
+  --color-accent:        var(--color-amber-400);
+  --color-accent-subtle: var(--color-amber-100);
+
+  /* Backgrounds */
+  --color-bg:           var(--color-neutral-100);
+  --color-surface:      #FFFFFF;
+  --color-surface-raised: var(--color-neutral-50);
+
+  /* Borders */
+  --color-border:       var(--color-neutral-200);
+  --color-border-hover: var(--color-neutral-300);
+  --color-border-brand: var(--color-honey-300);
+
+  /* Text */
+  --color-text-primary:   var(--color-neutral-900);
+  --color-text-secondary: var(--color-neutral-600);
+  --color-text-muted:     var(--color-neutral-400);
+  --color-text-brand:     var(--color-honey-600);
+  --color-text-on-brand:  #FFFFFF;
+
+  /* Status */
+  --color-success:        #2A7A4B;
+  --color-success-subtle: #E6F4EC;
+  --color-danger:         #C0392B;
+  --color-danger-subtle:  #FDECEA;
+
+  /* ── Radius ── */
+  --r-none: 2px;
+  --r-sm:   6px;
+  --r-md:   10px;
+  --r-lg:   16px;
+  --r-xl:   24px;
+  --r-full: 100px;
+
+  /* ── Typography ── */
+  --font-display: "PT Sans", Georgia, serif;
+  --font-body:    'DM Sans', system-ui, sans-serif;
+
+  /* ── Shadows (warm-tinted, not cold gray) ── */
+  --shadow-1: 0 1px 3px  rgba(71, 31, 4, 0.06);
+  --shadow-2: 0 4px 12px rgba(71, 31, 4, 0.08);
+  --shadow-3: 0 8px 24px rgba(71, 31, 4, 0.10);
+  --shadow-4: 0 16px 40px rgba(71, 31, 4, 0.12);
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+}

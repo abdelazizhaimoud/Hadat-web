@@ -3,12 +3,15 @@ import axiosInstance from "../../utils/axiosClient"
 import axios from "axios"
 import HomeFeedCard from "./HomeFeedCard"
 import type { Activity } from "../../types/Activity"
+import { useAppDispatch, useAppSelector } from "../../app/hooks"
+import { setHomeActivities } from "../../features/activities/activitiesSlice"
 
 function HomeFeed() {
-    const [activities, setActivities] = useState<Activity[]>([])
+    const dispatch = useAppDispatch()
+    const storeHomeActivities = useAppSelector((state) => state.activities.home)
+    const activities: Activity[] = storeHomeActivities ?? []
     const [category,setCategory] = useState<string>("")
     const [Search,setSearch] = useState<string>("")
-    // const [comment]
 
     const fetchActivities = async () => {
         try{
@@ -16,7 +19,7 @@ function HomeFeed() {
                 params: {search: Search, category}
             })
             if (response.status == 200){
-                setActivities(response.data.activities)
+                dispatch(setHomeActivities(response.data.activities))
             }
         }catch (error){
             if (axios.isAxiosError(error)){
@@ -40,8 +43,10 @@ function HomeFeed() {
         }
     }
     useEffect(() => {
-        fetchActivities()
-    },[])
+        if (storeHomeActivities === null) { 
+            fetchActivities()
+        }
+    },[storeHomeActivities])
 
     const join = async(id: number) => {
         try{

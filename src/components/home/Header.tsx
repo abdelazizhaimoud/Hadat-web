@@ -6,7 +6,6 @@ function Header() {
       <Link to="/home">Home</Link>
       <Link to="/create-activity">Create Activity</Link>
       <Link to="/dashboard">My Dashboard</Link>
-      <Link to="/logout">Logout</Link>
       <Link to="/profile">Profile</Link>
     </div>
   )
