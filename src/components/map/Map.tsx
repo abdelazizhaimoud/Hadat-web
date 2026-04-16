@@ -60,18 +60,16 @@ export default function Map({ create , position = [33.5731, -7.5898] , setLocati
     <MapContainer
       center={position}
       zoom={12}
-      style={{ height: "400px", width: "400px" , cursor: "pointer"}}
+      style={{ height: "400px", width: "100%", maxWidth: "100%" , cursor: "pointer"}}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         attribution="&copy; OpenStreetMap contributors"
       />
 
-      // Handle clicks 
       <MapClick setPosition={updatePosition} />
 
       {!selectedPosition && <Marker position={position}></Marker>}
-      // User selected marker 
       {selectedPosition && (
         <Marker position={selectedPosition}>
           <Popup>
@@ -86,7 +84,7 @@ export default function Map({ create , position = [33.5731, -7.5898] , setLocati
     <MapContainer
       center={position}
       zoom={12}
-      style={{ height: "400px", width: "400px" , cursor: "pointer"}}
+      style={{ height: "400px", width: "100%", maxWidth: "100%" , cursor: "pointer"}}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
